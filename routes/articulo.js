@@ -21,27 +21,29 @@ router.get('/id/:id', [
 ], articuloControllers.articuloGetById)
 
 router.post('/', [
-  check("codigo", 'El codigo es obligatorio').not().isEmpty(),
-  check("nombre", 'El nombre es obligatorio').not().isEmpty(),
-  check("categoria", 'La categoria es obligatoria').not().isEmpty(),
-  check("stock", 'El stock es obligatorio').not().isEmpty(),
-  check("impuesto", 'El impuesto es obligatorio').not().isEmpty(),
-  check("precioVenta", 'El precio es obligatorio').not().isEmpty(),
-  check("descripcion", 'La descripcion es obligatoria').not().isEmpty(),
-
+  check("codigo", 'El codigo es obligatorio').trim().not().isEmpty(),
+  check("nombre", 'El nombre es obligatorio').trim().not().isEmpty(),
+  check("categoria", 'La categoria es obligatoria').trim().not().isEmpty(),
+  check("stock", 'El stock es obligatorio').trim().not().isEmpty(),
+  check("impuesto", 'El impuesto es obligatorio').trim().not().isEmpty(),
+  check("precioVenta", 'El precio es obligatorio').trim().not().isEmpty(),
+  check("descripcion", 'La descripcion es obligatoria').trim().not().isEmpty(),
+  check('stock').custom(helperArticulo.articuloStock),
+  check('precioVenta').custom(helperArticulo.articuloprecioVenta),
   check('nombre').custom(helperArticulo.existeArticuloByNombre),
+  check('codigo').custom(helperArticulo.existeArticuloByCodigo),
   validarCampos
 ], articuloControllers.articuloPost)
 
 router.put("/:id", [
   check('id', 'No es un mongoID ').isMongoId(),
   
-  check("nombre", 'El nombre es obligatorio').not().isEmpty(),
-  check("categoria", 'La categoria es obligatoria').not().isEmpty(),
-  check("stock", 'El stock es obligatorio').not().isEmpty(),
-  check("impuesto", 'El impuesto es obligatorio').not().isEmpty(),
-  check("precioVenta", 'El precio es obligatorio').not().isEmpty(),
-  check("descripcion", 'La descripcion es obligatoria').not().isEmpty(),
+  check("nombre", 'El nombre es obligatorio').trim().not().isEmpty(),
+  check("categoria", 'La categoria es obligatoria').trim().not().isEmpty(),
+  check("stock", 'El stock es obligatorio').trim().not().isEmpty(),
+  check("impuesto", 'El impuesto es obligatorio').trim().not().isEmpty(),
+  check("precioVenta", 'El precio es obligatorio').trim().not().isEmpty(),
+  check("descripcion", 'La descripcion es obligatoria').trim().not().isEmpty(),
   check('id',).custom(helperArticulo.existeArticuloById),
   validarCampos
 ], articuloControllers.articuloPut)

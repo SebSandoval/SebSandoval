@@ -48,7 +48,7 @@ const clienteControllers = {
 
   clientePut: async (req, res) => {
     const { id } = req.params;
-    const { _id, createdAt, ...resto } = req.body;
+    const { _id, createdAt,numeroDocumento, ...resto } = req.body;
     const cliente = await Cliente.findByIdAndUpdate(id, resto);
     res.json({
       cliente

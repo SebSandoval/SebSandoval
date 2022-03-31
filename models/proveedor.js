@@ -34,7 +34,7 @@ const ProveedorSchema = mongoose.Schema({
         type: String,
         required : true,
         maxlength : 50,
-        unique : true
+        
     },
     estado: {
         type: Number,

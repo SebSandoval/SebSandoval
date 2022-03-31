@@ -12,7 +12,7 @@ router.get('/', usuarioControllers.usuarioGet)
 router.post('/login', [
     check('email', 'El correo no es valido').isEmail(),
     check('password', 'El password es obligatorio').not().isEmpty(),
-    validarCampos //validar que sea un mongoId todas las rutas donde hayan parametros id
+   
 ], usuarioControllers.usuarioLogin)
 
 
@@ -31,10 +31,12 @@ router.get('/id/:id', [
 ], usuarioControllers.usuarioGetById)
 
 router.post('/',[
-    check('rol', 'El rol es obligatorio').not().isEmpty(),
-    check('nombre','El nombre es obligatorio').not().isEmpty(),
+    check('rol', 'El rol es obligatorio').trim().not().isEmpty(),
+    check('nombre','El nombre es obligatorio').trim().not().isEmpty(),
     check('password', 'El password debe ser de mas de 6 caracteres').isLength({min:6}),
-    check('email', 'El correo no es valido').isEmail(),
+    check('email', 'El correo no es valido').trim().isEmail(),
+    check('nombre').custom(helperUsuario.existeUsuarioByNombre),
+    check('email').custom(helperUsuario.existeUsuarioByemail),
     validarCampos
 ], usuarioControllers.usuarioPost),
 

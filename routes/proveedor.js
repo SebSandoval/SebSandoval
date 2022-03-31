@@ -22,14 +22,15 @@ router.get('/id/:id', [
 
 
 router.post('/', [
-    check("nombre", 'El nombre es obligatorio').not().isEmpty(),
-    check("tipoPersona", 'El tipo de persona es obligatorio').not().isEmpty(),
-    check("tipoDocumento", 'El tipo de documento es obligatorio').not().isEmpty(),
-    check("numeroDocumento", 'El numero de documento es obligatorio').not().isEmpty(),
-    check("direccion", 'la direccion es obligatoria').not().isEmpty(),
-    check("telefono", 'El telefono es obligatorio').not().isEmpty(),
-    check('email', 'El correo no es valido').isEmail(),
-    check('nombre',).custom(helperProveedor.existeProveedorByNombre),
+    check("nombre", 'El nombre es obligatorio').trim().not().isEmpty(),
+    check("tipoPersona", 'El tipo de persona es obligatorio').trim().not().isEmpty(),
+    check("tipoDocumento", 'El tipo de documento es obligatorio').trim().not().isEmpty(),
+    check("numeroDocumento", 'El numero de documento es obligatorio').trim().not().isEmpty(),
+    check("direccion", 'la direccion es obligatoria').trim().not().isEmpty(),
+    check("telefono", 'El telefono es obligatorio').trim().not().isEmpty(),
+    check('email', 'El correo no es valido').trim().isEmail(),
+    check('email').custom(helperProveedor.existeProveedorByemail),
+    check('numeroDocumento').custom(helperProveedor.existeProveedorBynumeroDocumento),
     validarCampos
 ], proveedorControllers.proveedorPost)
 
@@ -38,13 +39,15 @@ router.post('/', [
 
 router.put("/:id", [
     check('id', 'No es un mongoID ').isMongoId(),
-    check("tipoPersona", 'El tipo de persona es obligatorio').not().isEmpty(),
-    check("tipoDocumento", 'El tipo de documento es obligatorio').not().isEmpty(),
-    check("numeroDocumento", 'El numero de documento es obligatorio').not().isEmpty(),
-    check("direccion", 'la direccion es obligatoria').not().isEmpty(),
-    check("telefono", 'El telefono es obligatorio').not().isEmpty(),
-    check('email', 'El correo no es valido').isEmail(),
+    check("tipoPersona", 'El tipo de persona es obligatorio').trim().not().isEmpty(),
+    check("tipoDocumento", 'El tipo de documento es obligatorio').trim().not().isEmpty(),
+    check("numeroDocumento", 'El numero de documento es obligatorio').trim().not().isEmpty(),
+    check("direccion", 'la direccion es obligatoria').trim().not().isEmpty(),
+    check("telefono", 'El telefono es obligatorio').trim().not().isEmpty(),
+    check('email', 'El correo no es valido').trim().isEmail(),
     check('id',).custom(helperProveedor.existeProveedorById),
+    check('numeroDocumento',).custom(helperProveedor.existeProveedorBynumeroDocumento),
+    check('email',).custom(helperProveedor.existeProveedorByemail),
     validarCampos
 ], proveedorControllers.proveedorPut)
 

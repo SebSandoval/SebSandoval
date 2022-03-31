@@ -22,8 +22,8 @@ router.get('/id/:id', [
 
 
 router.post('/', [
-  check("nombre", 'El nombre es obligatorio').not().isEmpty(),
-  check("descripcion", 'La descripcion es obligatoria').not().isEmpty(),
+  check("nombre", 'El nombre es obligatorio').trim().not().isEmpty(),
+  check("descripcion", 'La descripcion es obligatoria').trim().not().isEmpty(),
   check('nombre',).custom(helperCategoria.existeCategoriaByNombre),
   validarCampos
 ], categoriaControllers.categoriaPost)
@@ -32,8 +32,8 @@ router.post('/', [
 
 router.put("/:id", [
   check('id', 'No es un mongoID ').isMongoId(),
-  check("nombre", 'El nombre es obligatorio').not().isEmpty(),
-  check("descripcion", 'La descripcion es obligatoria').not().isEmpty(),
+  check("nombre", 'El nombre es obligatorio').trim().not().isEmpty(),
+  check("descripcion", 'La descripcion es obligatoria').trim().not().isEmpty(),
   check('id',).custom(helperCategoria.existeCategoriaById),
   validarCampos
 ], categoriaControllers.categoriaPut)
