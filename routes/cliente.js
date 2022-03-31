@@ -35,6 +35,13 @@ router.post('/',[
 router.put("/:id", [
     check('id', 'No es un mongoID ').isMongoId(),
     check('id',).custom(helperCliente.existeClienteById),
+    check("tipoPersona", 'El tipo de persona es obligatorio').not().isEmpty(),
+    check("tipoDocumento", 'El tipo de documento es obligatorio').not().isEmpty(),
+    check("numeroDocumento", 'El numero de documento es obligatorio').not().isEmpty(),
+    check("direccion", 'la direccion es obligatoria').not().isEmpty(),
+    check("telefono", 'El telefono es obligatorio').not().isEmpty(),
+    check('email', 'El correo no es valido').isEmail(),
+
     validarCampos
   ], clienteControllers.clientePut)
 

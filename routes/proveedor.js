@@ -23,6 +23,12 @@ router.get('/id/:id', [
 
 router.post('/', [
     check("nombre", 'El nombre es obligatorio').not().isEmpty(),
+    check("tipoPersona", 'El tipo de persona es obligatorio').not().isEmpty(),
+    check("tipoDocumento", 'El tipo de documento es obligatorio').not().isEmpty(),
+    check("numeroDocumento", 'El numero de documento es obligatorio').not().isEmpty(),
+    check("direccion", 'la direccion es obligatoria').not().isEmpty(),
+    check("telefono", 'El telefono es obligatorio').not().isEmpty(),
+    check('email', 'El correo no es valido').isEmail(),
     check('nombre',).custom(helperProveedor.existeProveedorByNombre),
     validarCampos
 ], proveedorControllers.proveedorPost)
@@ -32,6 +38,12 @@ router.post('/', [
 
 router.put("/:id", [
     check('id', 'No es un mongoID ').isMongoId(),
+    check("tipoPersona", 'El tipo de persona es obligatorio').not().isEmpty(),
+    check("tipoDocumento", 'El tipo de documento es obligatorio').not().isEmpty(),
+    check("numeroDocumento", 'El numero de documento es obligatorio').not().isEmpty(),
+    check("direccion", 'la direccion es obligatoria').not().isEmpty(),
+    check("telefono", 'El telefono es obligatorio').not().isEmpty(),
+    check('email', 'El correo no es valido').isEmail(),
     check('id',).custom(helperProveedor.existeProveedorById),
     validarCampos
 ], proveedorControllers.proveedorPut)

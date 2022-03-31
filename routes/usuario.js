@@ -11,7 +11,7 @@ router.get('/', usuarioControllers.usuarioGet)
 
 router.post('/login', [
     check('email', 'El correo no es valido').isEmail(),
-    //check('password', 'El password es obligatorio').not().isEmpty().
+    check('password', 'El password es obligatorio').not().isEmpty(),
     validarCampos //validar que sea un mongoId todas las rutas donde hayan parametros id
 ], usuarioControllers.usuarioLogin)
 
