@@ -20,14 +20,14 @@ const validarJWT = async(req,res=response,next)=>{
 
         if( !usuario ) {
             return res.status(401).json({
-                msg: 'Token no válido '//- usuario no existe DB
+                msg: 'Tokenn no válido '//- usuario no existe DB
             })
         }
 
         // Verificar si el uid tiene estado true
         if ( usuario.estado ==0) {
             return res.status(401).json({
-                msg: 'Token no válido ' //- usuario con estado: false
+                msg: 'Token no válidoo ' //- usuario con estado: false
             })
         }
         req.usuario=usuario;

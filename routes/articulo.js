@@ -3,24 +3,25 @@ import helperArticulo from "../helpers/articulos.js";
 import { Router } from "express";
 import { check } from "express-validator";
 import { validarCampos } from "../middlewares/validar-campos.js";
+import { validarJWT } from "../middlewares/validar-jwt.js";
 
 const router = Router()
-router.get('/', articuloControllers.articuloGet)
+router.get('/' ,validarJWT, articuloControllers.articuloGet)
 
 
-router.get('/query', [
+router.get('/query', [validarJWT,
   check('query', 'Los campos son obligatorios').not().isEmpty(),
   validarCampos
 ], articuloControllers.articuloGetQuery)
 
 
-router.get('/id/:id', [
+router.get('/id/:id', [validarJWT,
   check('id', 'No es un mongoID ').isMongoId(),
   check('id',).custom(helperArticulo.existeArticuloById),
   validarCampos //validar que sea un mongoId todas las rutas donde hayan parametros id
 ], articuloControllers.articuloGetById)
 
-router.post('/', [
+router.post('/', [validarJWT,
   check("codigo", 'El codigo es obligatorio').trim().not().isEmpty(),
   check("nombre", 'El nombre es obligatorio').trim().not().isEmpty(),
   check("categoria", 'La categoria es obligatoria').trim().not().isEmpty(),
@@ -35,7 +36,7 @@ router.post('/', [
   validarCampos
 ], articuloControllers.articuloPost)
 
-router.put("/:id", [
+router.put("/:id", [validarJWT,
   check('id', 'No es un mongoID ').isMongoId(),
   
   check("nombre", 'El nombre es obligatorio').trim().not().isEmpty(),
@@ -45,22 +46,24 @@ router.put("/:id", [
   check("precioVenta", 'El precio es obligatorio').trim().not().isEmpty(),
   check("descripcion", 'La descripcion es obligatoria').trim().not().isEmpty(),
   check('id',).custom(helperArticulo.existeArticuloById),
+  check('stock').custom(helperArticulo.articuloStock),
+  check('precioVenta').custom(helperArticulo.articuloprecioVenta),
   validarCampos
 ], articuloControllers.articuloPut)
 
-router.put("/activar/:id", [
+router.put("/activar/:id", [validarJWT,
   check('id', 'No es un mongoID ').isMongoId(),
   check('id',).custom(helperArticulo.existeArticuloById),
   validarCampos
 ], articuloControllers.articuloPutActivar)
 
-router.put("/desactivar/:id", [
+router.put("/desactivar/:id", [validarJWT,
   check('id', 'No es un mongoID ').isMongoId(),
   check('id',).custom(helperArticulo.existeArticuloById),
   validarCampos
 ], articuloControllers.articuloPutDesActivar)
 
-router.delete('/:id', [
+router.delete('/:id', [validarJWT,
   check('id', 'No es un mongoID ').isMongoId(),
   check('id',).custom(helperArticulo.existeArticuloById),
   validarCampos

@@ -3,17 +3,18 @@ import { Router } from "express";
 import { check } from "express-validator";
 import { validarCampos } from "../middlewares/validar-campos.js";
 import helperProveedor from "../helpers/proveedor.js";
+import { validarJWT } from "../middlewares/validar-jwt.js";
 
 const router = Router()
 
 router.get('/', proveedorControllers.proveedorGet)
 
-router.get('/query', [
+router.get('/query', [validarJWT,
     check('query', 'Los campos son obligatorios').not().isEmpty(),
     validarCampos
 ], proveedorControllers.proveedorGetQuery)
 
-router.get('/id/:id', [
+router.get('/id/:id', [ validarJWT,
     check('id', 'No es un mongoID ').isMongoId(),
     check('id',).custom(helperProveedor.existeProveedorById),
     validarCampos //validar que sea un mongoId todas las rutas donde hayan parametros id
@@ -21,7 +22,7 @@ router.get('/id/:id', [
 
 
 
-router.post('/', [
+router.post('/', [validarJWT,
     check("nombre", 'El nombre es obligatorio').trim().not().isEmpty(),
     check("tipoPersona", 'El tipo de persona es obligatorio').trim().not().isEmpty(),
     check("tipoDocumento", 'El tipo de documento es obligatorio').trim().not().isEmpty(),
@@ -37,7 +38,7 @@ router.post('/', [
 
 
 
-router.put("/:id", [
+router.put("/:id", [validarJWT,
     check('id', 'No es un mongoID ').isMongoId(),
     check("tipoPersona", 'El tipo de persona es obligatorio').trim().not().isEmpty(),
     check("tipoDocumento", 'El tipo de documento es obligatorio').trim().not().isEmpty(),
@@ -51,19 +52,19 @@ router.put("/:id", [
     validarCampos
 ], proveedorControllers.proveedorPut)
 
-router.put("/activar/:id", [
+router.put("/activar/:id", [validarJWT,
     check('id', 'No es un mongoID ').isMongoId(),
     check('id',).custom(helperProveedor.existeProveedorById),
     validarCampos
 ], proveedorControllers.proveedorPutActivar)
 
-router.put("/desactivar/:id", [
+router.put("/desactivar/:id", [validarJWT,
     check('id', 'No es un mongoID ').isMongoId(),
     check('id',).custom(helperProveedor.existeProveedorById),
     validarCampos                             //validar que sea un mongoId 
 ], proveedorControllers.proveedorPutDesActivar)
 
-router.delete('/:id', [
+router.delete('/:id', [validarJWT,
     check('id', 'No es un mongoID ').isMongoId(),
     check('id',).custom(helperProveedor.existeProveedorById),
     validarCampos

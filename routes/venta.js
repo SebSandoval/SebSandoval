@@ -21,8 +21,13 @@ router.get('/query', [
   
 
 router.post('/',[
-    check("usuario", 'El usuario es obligatorio').not().isEmpty(),
-  
+    check("usuario", 'El usuario es obligatorio').trim().not().isEmpty(),
+    check("cliente", 'El cliente es obligatorio').trim().not().isEmpty(),
+    check("tipoComprobante", 'El tipoComprobante es obligatorio').trim().not().isEmpty(),
+    check("serieComprobante", 'El serieComprobante es obligatorio').trim().not().isEmpty(),
+    check("numeroComprobante", 'El numeroComprobante es obligatorio').trim().not().isEmpty(),
+    check("impuesto", 'El impuesto es obligatorio').trim().not().isEmpty(),
+    check("total", 'El total es obligatorio').trim().not().isEmpty(),
     validarCampos
   ], ventaControllers.ventaPost)
 
