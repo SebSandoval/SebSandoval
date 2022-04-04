@@ -2,25 +2,28 @@ import Usuario from "../models/usuario.js"
 
 
 const helperUsuario = {
-    existeUsuarioById: async (id) => {
+    existeUsuarioById: async (id, req) => {
         const existe = await Usuario.findById(id)
 
         if (!existe) {
             throw new Error(`El id no existe ${id}`)
         }
+        req.req.usuario = existe
     },
-    existeUsuarioByNombre: async (nombre) => {
-        const existe = await Usuario.findOne({nombre})
-
-        if (existe) {
-            throw new Error(`Ya existe Usuario con el nombre:  ${nombre}`)
-        }
-    },
-    existeUsuarioByemail: async (email) => {
+   
+    existeUsuarioByemail: async (email, req) => {
         const existe = await Usuario.findOne({email})
 
-        if (existe) {
-            throw new Error(`Ya existe Usuario con el email:  ${email}`)
+        if (req.req.method === "POST") {
+            if (existe) {
+                throw new Error(`Ya existe usuario con el email:  ${email}`)
+            }
+        } else if (req.req.method === "PUT") {
+            if (existe) {
+                if (req.req.usuario.email != existe.email) {
+                    throw new Error(`Ya existe usuario con el email:  ${email}`)
+                }
+            }
         }
     },
 

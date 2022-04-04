@@ -3,9 +3,10 @@ import { Router } from "express";
 import { check } from "express-validator";
 import helperUsuario from "../helpers/usuarios.js";
 import { validarCampos } from "../middlewares/validar-campos.js";
+import { validarJWT } from "../middlewares/validar-jwt.js";
 const router = Router()
 
-router.get('/', usuarioControllers.usuarioGet)
+router.get('/' ,usuarioControllers.usuarioGet)
 
 
 
@@ -17,20 +18,20 @@ router.post('/login', [
 
 
 
-router.get('/query', [
+router.get('/query', [validarJWT  ,
     check('query', 'Los campos son obligatorios').not().isEmpty(),
     validarCampos
 
 ], usuarioControllers.usuarioGetQuery)
 
 
-router.get('/id/:id', [
+router.get('/id/:id', [validarJWT  ,
     check('id', 'No es un mongoID ').isMongoId(),
     check('id',).custom(helperUsuario.existeUsuarioById),
     validarCampos //validar que sea un mongoId todas las rutas donde hayan parametros id
 ], usuarioControllers.usuarioGetById)
 
-router.post('/',[
+router.post('/',[validarJWT  ,
     check('rol', 'El rol es obligatorio').trim().not().isEmpty(),
     check('nombre','El nombre es obligatorio').trim().not().isEmpty(),
     check('password', 'El password debe ser de mas de 6 caracteres').isLength({min:6}),
@@ -41,7 +42,7 @@ router.post('/',[
 ], usuarioControllers.usuarioPost),
 
 
-router.put("/:id", [
+router.put("/:id", [validarJWT  ,
     check('id', 'No es un mongoID ').isMongoId(),
     check('id',).custom(helperUsuario.existeUsuarioById),
     validarCampos
@@ -50,13 +51,13 @@ router.put("/:id", [
 
 
 
-router.put("/activar/:id", [
+router.put("/activar/:id", [validarJWT  ,
     check('id', 'No es un mongoID ').isMongoId(),
     check('id',).custom(helperUsuario.existeUsuarioById),
     validarCampos
 ], usuarioControllers.usuarioPutActivar)
 
-router.put("/desactivar/:id", [
+router.put("/desactivar/:id", [validarJWT  ,
     check('id', 'No es un mongoID ').isMongoId(),
     check('id',).custom(helperUsuario.existeUsuarioById),
     validarCampos                             //validar que sea un mongoId 
