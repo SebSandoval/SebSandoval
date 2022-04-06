@@ -36,7 +36,7 @@ router.post('/',[validarJWT  ,
     check('nombre','El nombre es obligatorio').trim().not().isEmpty(),
     check('password', 'El password debe ser de mas de 6 caracteres').isLength({min:6}),
     check('email', 'El correo no es valido').trim().isEmail(),
-    check('nombre').custom(helperUsuario.existeUsuarioByNombre),
+    
     check('email').custom(helperUsuario.existeUsuarioByemail),
     validarCampos
 ], usuarioControllers.usuarioPost),

@@ -7,8 +7,8 @@ const ventaControllers = {
 
 
   ventaPost: async (req, res) => {
-    const { usuario, cliente, tipoComprobante, serieComprobante,numeroComprobante, fecha, impuesto, total } = req.body
-    const venta = new Venta({ usuario, cliente, tipoComprobante, serieComprobante,numeroComprobante, fecha, impuesto, total })
+    const { usuario, cliente, tipoComprobante, serieComprobante,numeroComprobante, fecha, impuesto, total, detalles } = req.body
+    const venta = new Venta({ usuario, cliente, tipoComprobante, serieComprobante,numeroComprobante, fecha, impuesto, total, detalles })
     await venta.save()
     res.json(venta)
   },
