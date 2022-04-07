@@ -33,10 +33,14 @@ router.get('/id/:id', [validarJWT  ,
 
 router.post('/',[validarJWT  ,
     check('rol', 'El rol es obligatorio').trim().not().isEmpty(),
+    check('rol','El rol no puede exceder los 20 caracteres').isLength({max:20}),
+
     check('nombre','El nombre es obligatorio').trim().not().isEmpty(),
+    check('nombre','El nombre no puede exceder los 50 caracteres').isLength({max:50}),
     check('password', 'El password debe ser de mas de 6 caracteres').isLength({min:6}),
     check('email', 'El correo no es valido').trim().isEmail(),
-    
+    check('email','El email no puede exceder los 50 caracteres').isLength({max:50}),
+
     check('email').custom(helperUsuario.existeUsuarioByemail),
     validarCampos
 ], usuarioControllers.usuarioPost),
@@ -44,6 +48,15 @@ router.post('/',[validarJWT  ,
 
 router.put("/:id", [validarJWT  ,
     check('id', 'No es un mongoID ').isMongoId(),
+    check('rol', 'El rol es obligatorio').trim().not().isEmpty(),
+    check('rol','El rol no puede exceder los 20 caracteres').isLength({max:20}),
+
+    check('nombre','El nombre es obligatorio').trim().not().isEmpty(),
+    check('nombre','El nombre no puede exceder los 50 caracteres').isLength({max:50}),
+    check('password', 'El password debe ser de mas de 6 caracteres').isLength({min:6}),
+    check('email', 'El correo no es valido').trim().isEmail(),
+    check('email','El email no puede exceder los 50 caracteres').isLength({max:50}),
+    check('email').custom(helperUsuario.existeUsuarioByemail),
     check('id',).custom(helperUsuario.existeUsuarioById),
     validarCampos
 ], usuarioControllers.usuarioPut)
@@ -54,6 +67,7 @@ router.put("/:id", [validarJWT  ,
 router.put("/activar/:id", [validarJWT  ,
     check('id', 'No es un mongoID ').isMongoId(),
     check('id',).custom(helperUsuario.existeUsuarioById),
+
     validarCampos
 ], usuarioControllers.usuarioPutActivar)
 

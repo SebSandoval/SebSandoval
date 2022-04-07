@@ -24,7 +24,9 @@ router.get('/id/:id', [validarJWT,
 
 router.post('/', [validarJWT,
   check("nombre", 'El nombre es obligatorio').trim().not().isEmpty(),
+  check("nombre", 'El nombre no puede superar los 20 caracteres').isLength({max:20}),
   check("descripcion", 'La descripcion es obligatoria').trim().not().isEmpty(),
+  check("descripcion", 'La descripcion no puede superar los 250 caracteres').isLength({max:250}),
   check('nombre',).custom(helperCategoria.existeCategoriaByNombre),
   validarCampos
 ], categoriaControllers.categoriaPost)
@@ -34,7 +36,9 @@ router.post('/', [validarJWT,
 router.put("/:id", [validarJWT,
   check('id', 'No es un mongoID ').isMongoId(),
   check("nombre", 'El nombre es obligatorio').trim().not().isEmpty(),
+  check("nombre", 'El nombre no puede superar los 20 caracteres').isLength({max:20}),
   check("descripcion", 'La descripcion es obligatoria').trim().not().isEmpty(),
+  check("descripcion", 'La descripcion no puede superar los 250 caracteres').isLength({max:250}),
   check('id',).custom(helperCategoria.existeCategoriaById),
   validarCampos
 ], categoriaControllers.categoriaPut)
