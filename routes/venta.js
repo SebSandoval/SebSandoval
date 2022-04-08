@@ -21,6 +21,7 @@ router.get('/query', [validarJWT,
 
   
 
+  
 router.post('/',[validarJWT,
     check("usuario", 'El usuario es obligatorio').trim().not().isEmpty(),
     check("cliente", 'El cliente es obligatorio').trim().not().isEmpty(),
@@ -28,7 +29,11 @@ router.post('/',[validarJWT,
     check("serieComprobante", 'El serieComprobante es obligatorio').trim().not().isEmpty(),
     check("numeroComprobante", 'El numeroComprobante es obligatorio').trim().not().isEmpty(),
     check("impuesto", 'El impuesto es obligatorio').trim().not().isEmpty(),
-    check("total", 'El total es obligatorio').trim().not().isEmpty(),
+    //check("detalles._id", 'El id es obligatorio').trim().not().isEmpty(),
+    //check("detalles.precioProducto", 'El precio es obligatorio').trim().not().isEmpty(),
+    //check("detalles.nombreProducto", 'El nombre es obligatorio').trim().not().isEmpty(),
+    //check("detalles.cantidadProducto", 'La cantidad es obligatoria').trim().not().isEmpty(),
+
     validarCampos
   ], ventaControllers.ventaPost)
 

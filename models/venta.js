@@ -35,7 +35,7 @@ const VentaSchema = mongoose.Schema({
             type: String,
             required: true
         },
-         nombreProduto: {
+         nombreProducto: {
             type: String,
             required: true
         },
@@ -64,5 +64,12 @@ const VentaSchema = mongoose.Schema({
         default: Date.now
     }
 })
+
+
+    
+    
+      
+    
+
 
 export default mongoose.model("Venta", VentaSchema)
