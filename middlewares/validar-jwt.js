@@ -5,7 +5,7 @@ import Usuario from "../models/usuario.js";
 
 const validarJWT = async(req,res=response,next)=>{
     const token=req.header('x-token');
-
+    
     if(!token){
         return res.status(401).json({
             msg:'No hay token en la peticion'
@@ -31,7 +31,7 @@ const validarJWT = async(req,res=response,next)=>{
             })
         }
         req.usuario=usuario;
-        
+     
         next();
 
     } catch (error) {

@@ -6,9 +6,18 @@ const ventaControllers = {
 
 
 
+
+
+
   ventaPost: async (req, res) => {
-    const { usuario, cliente, tipoComprobante, serieComprobante,numeroComprobante, fecha, impuesto, total, detalles } = req.body
-    const venta = new Venta({ usuario, cliente, tipoComprobante, serieComprobante,numeroComprobante, fecha, impuesto, total, detalles })
+    const { usuario, cliente, tipoComprobante, serieComprobante, numeroComprobante, fecha, impuesto, total, detalles } = req.body
+    const venta = new Venta({ usuario, cliente, tipoComprobante, serieComprobante, numeroComprobante, fecha, impuesto, total, detalles })
+    venta.detalles.forEach((e) => {
+      e.subtotal = e.cantidadProducto * e.precioProducto
+    });
+    venta.total = venta.detalles.reduce((x, y) => x += y.subtotal, 0)
+
+
     await venta.save()
     res.json(venta)
   },
@@ -16,7 +25,7 @@ const ventaControllers = {
 
   ventaGet: async (req, res = response) => {
     const venta = await Venta.find()
-      .populate ('usuario', ['rol' ,'nombre'])
+      .populate('usuario', ['rol', 'nombre'])
       .populate('cliente', 'nombre')
       .sort({ 'createdAt': -1 })
     res.json({
@@ -24,25 +33,25 @@ const ventaControllers = {
     })
   },
 
-  ventaGetQuery: async(req, res = response)=>{
+  ventaGetQuery: async (req, res = response) => {
     const query = req.query.query
-    const venta= await Venta.find({
-      $or:[
-        {nombre: new RegExp(query, 'i')},
-        
+    const venta = await Venta.find({
+      $or: [
+        { nombre: new RegExp(query, 'i') },
+
       ]
     })
-    .sort({'createdAt': -1})
-    res.json({venta})
-    },
-    ventaGetById: async (req, res) => {
-      //const {id}= req.query
-      const { id } = req.params
-      const venta = await Venta.findOne({ _id: id })
-      res.json({
-        venta
-      })
-    },
+      .sort({ 'createdAt': -1 })
+    res.json({ venta })
+  },
+  ventaGetById: async (req, res) => {
+    //const {id}= req.query
+    const { id } = req.params
+    const venta = await Venta.findOne({ _id: id })
+    res.json({
+      venta
+    })
+  },
 
   ventaPut: async (req, res) => {
     const { id } = req.params;
@@ -53,20 +62,20 @@ const ventaControllers = {
     })
   },
 
- ventaPutActivar: async (req, res) => {
+  ventaPutActivar: async (req, res) => {
     const { id } = req.params;
     constventa = await Venta.findByIdAndUpdate(id, { estado: 1 });
 
     res.json({
-     venta
+      venta
     })
   },
- ventaPutDesActivar: async (req, res) => {
+  ventaPutDesActivar: async (req, res) => {
     const { id } = req.params;
     constventa = await Venta.findByIdAndUpdate(id, { estado: 0 });
 
     res.json({
-     venta
+      venta
     })
   },
 

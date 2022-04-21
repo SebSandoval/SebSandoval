@@ -91,15 +91,22 @@ const usuarioControllers = {
     
     try{
       const usuario= await Usuario.findOne({email});
+      
       if(!usuario){
         return res.status(400).json({
           msg:'usuario o password incorrectos'
         })
       }
+      
       const validPassword = bcryptjs.compareSync(password, usuario.password);
       if(!validPassword){
         return res.status(400).json({
           msg:'usuario o password incorrectos'
+        })
+      }
+      if(usuario.estado==0){
+        return res.status(400).json({
+          msg:'Contacte al administrador'
         })
       }
       const token = await generarJWT(usuario.id);

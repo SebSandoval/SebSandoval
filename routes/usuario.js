@@ -4,6 +4,7 @@ import { check } from "express-validator";
 import helperUsuario from "../helpers/usuarios.js";
 import { validarCampos } from "../middlewares/validar-campos.js";
 import { validarJWT } from "../middlewares/validar-jwt.js";
+
 const router = Router()
 
 router.get('/' ,usuarioControllers.usuarioGet)
@@ -11,6 +12,7 @@ router.get('/' ,usuarioControllers.usuarioGet)
 
 
 router.post('/login', [
+
     check('email', 'El correo no es valido').isEmail(),
     check('password', 'El password es obligatorio').not().isEmpty(),
    
@@ -18,7 +20,7 @@ router.post('/login', [
 
 
 
-router.get('/query', [validarJWT  ,
+router.get('/query', [validarJWT,
     check('query', 'Los campos son obligatorios').not().isEmpty(),
     validarCampos
 
