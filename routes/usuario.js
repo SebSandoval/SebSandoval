@@ -33,7 +33,7 @@ router.get('/id/:id', [validarJWT  ,
     validarCampos //validar que sea un mongoId todas las rutas donde hayan parametros id
 ], usuarioControllers.usuarioGetById)
 
-router.post('/',[validarJWT  ,
+router.post('/',[
     check('rol', 'El rol es obligatorio').trim().not().isEmpty(),
     check('rol','El rol no puede exceder los 20 caracteres').isLength({max:20}),
 
