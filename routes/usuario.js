@@ -4,6 +4,7 @@ import { check } from "express-validator";
 import helperUsuario from "../helpers/usuarios.js";
 import { validarCampos } from "../middlewares/validar-campos.js";
 import { validarJWT } from "../middlewares/validar-jwt.js";
+import checkRol from "../middlewares/rol.js";
 
 const router = Router()
 
@@ -20,7 +21,7 @@ router.post('/login', [
 
 
 
-router.get('/query', [validarJWT,
+router.get('/query', [validarJWT,checkRol(["ADMINISTRADOR"]),
     check('query', 'Los campos son obligatorios').not().isEmpty(),
     validarCampos
 
@@ -33,7 +34,7 @@ router.get('/id/:id', [validarJWT  ,
     validarCampos //validar que sea un mongoId todas las rutas donde hayan parametros id
 ], usuarioControllers.usuarioGetById)
 
-router.post('/',[validarJWT  ,
+router.post('/',[ 
     check('rol', 'El rol es obligatorio').trim().not().isEmpty(),
     check('rol','El rol no puede exceder los 20 caracteres').isLength({max:20}),
 

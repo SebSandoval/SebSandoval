@@ -18,13 +18,13 @@ const helperUsuario = {
             if (existe) {
                 throw new Error(`Ya existe usuario con el email:  ${email}`)
             }
-        } else if (req.req.method === "PUT") {
+        } /* else if (req.req.method === "PUT") {
             if (existe) {
                 if (req.req.usuario.email != existe.email) {
                     throw new Error(`Ya existe usuario con el email:  ${email}`)
                 }
             }
-        }
+        } */
     },
 
 

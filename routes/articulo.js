@@ -6,7 +6,8 @@ import { validarCampos } from "../middlewares/validar-campos.js";
 import { validarJWT } from "../middlewares/validar-jwt.js";
 
 const router = Router()
-router.get('/' ,validarJWT, articuloControllers.articuloGet)
+router.get('/', validarJWT, articuloControllers.articuloGet)
+
 
 
 router.get('/query', [validarJWT,
@@ -24,13 +25,13 @@ router.get('/id/:id', [validarJWT,
 router.post('/', [validarJWT,
   check("codigo", 'El codigo es obligatorio').trim().not().isEmpty(),
   check("nombre", 'El nombre es obligatorio').trim().not().isEmpty(),
-  check("nombre", 'El nombre no debe ser mayor a 20 caracteres').isLength({max:20}),
+  check("nombre", 'El nombre no debe ser mayor a 20 caracteres').isLength({ max: 20 }),
   check("categoria", 'La categoria es obligatoria').trim().not().isEmpty(),
   check("stock", 'El stock es obligatorio').trim().not().isEmpty(),
   check("impuesto", 'El impuesto es obligatorio').trim().not().isEmpty(),
   check("precioVenta", 'El precio es obligatorio').trim().not().isEmpty(),
   check("descripcion", 'La descripcion es obligatoria').trim().not().isEmpty(),
-  check("descripcion", 'La descripcion no debe ser mayor a 100 caracteres').isLength({max:100}),
+  check("descripcion", 'La descripcion no debe ser mayor a 100 caracteres').isLength({ max: 100 }),
   check('stock').custom(helperArticulo.articuloStock),
   check('precioVenta').custom(helperArticulo.articuloprecioVenta),
   check('nombre').custom(helperArticulo.existeArticuloByNombre),
@@ -40,15 +41,14 @@ router.post('/', [validarJWT,
 
 router.put("/:id", [validarJWT,
   check('id', 'No es un mongoID ').isMongoId(),
-  
   check("nombre", 'El nombre es obligatorio').trim().not().isEmpty(),
-  check("nombre", 'El nombre no debe ser mayor a 20 caracteres').isLength({max:20}),
+  check("nombre", 'El nombre no debe ser mayor a 20 caracteres').isLength({ max: 20 }),
   check("categoria", 'La categoria es obligatoria').trim().not().isEmpty(),
   check("stock", 'El stock es obligatorio').trim().not().isEmpty(),
   check("impuesto", 'El impuesto es obligatorio').trim().not().isEmpty(),
   check("precioVenta", 'El precio es obligatorio').trim().not().isEmpty(),
   check("descripcion", 'La descripcion es obligatoria').trim().not().isEmpty(),
-  check("descripcion", 'La descripcion no debe ser mayor a 100 caracteres').isLength({max:100}),
+  check("descripcion", 'La descripcion no debe ser mayor a 100 caracteres').isLength({ max: 100 }),
   check('id',).custom(helperArticulo.existeArticuloById),
   check('stock').custom(helperArticulo.articuloStock),
   check('precioVenta').custom(helperArticulo.articuloprecioVenta),

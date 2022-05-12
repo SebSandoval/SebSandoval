@@ -4,6 +4,7 @@ import { check } from "express-validator";
 import { validarCampos } from "../middlewares/validar-campos.js";
 import helperCliente from "../helpers/clientes.js";
 import { validarJWT } from "../middlewares/validar-jwt.js";
+//import checkRol from "../middlewares/rol.js";
 const router = Router()
 
 router.get('/', validarJWT, clienteControllers.clienteGet)
@@ -20,18 +21,29 @@ router.get('/id/:id', [validarJWT,
 ], clienteControllers.clienteGetById)
 
 router.post('/', [validarJWT,
+
   check("nombre", 'El nombre es obligatorio').trim().not().isEmpty(),
-  check("nombre", 'El nombre no puede exceder los 50 caracteres').isLength({ max: 50 }),
+  check("nombre", 'El nombre no puede exceder los 50 caracteres').isLength({
+    max: 50
+  }),
   check("tipoPersona", 'El tipo de persona es obligatorio').trim().not().isEmpty(),
   check("tipoDocumento", 'El tipo de documento es obligatorio').trim().not().isEmpty(),
   check("numeroDocumento", 'El numero de documento es obligatorio').trim().not().isEmpty(),
-  check("numeroDocumento", 'El numero de documento no puede exceder los 20 caracteres').isLength({ max: 20 }),
+  check("numeroDocumento", 'El numero de documento no puede exceder los 20 caracteres').isLength({
+    max: 20
+  }),
   check("direccion", 'la direccion es obligatoria').trim().not().isEmpty(),
-  check("direccion", 'la direccion no debe ser mayor a 50 caracteres').isLength({ max: 50 }),
+  check("direccion", 'la direccion no debe ser mayor a 50 caracteres').isLength({
+    max: 50
+  }),
   check("telefono", 'El telefono es obligatorio').trim().not().isEmpty(),
-  check("telefono", 'El telefono no debe ser mayor a 20 caracteres').isLength({ max: 20 }),
+  check("telefono", 'El telefono no debe ser mayor a 20 caracteres').isLength({
+    max: 20
+  }),
   check('email', 'El correo no es valido').trim().isEmail(),
-  check('email', 'El correo no debe ser mayor a 50 caracteres').isLength({ max: 50 }),
+  check('email', 'El correo no debe ser mayor a 50 caracteres').isLength({
+    max: 50
+  }),
   check('email',).custom(helperCliente.existeClienteByEmail),
   check('numeroDocumento',).custom(helperCliente.existeClienteBynumeroDocumento),
 
@@ -46,17 +58,27 @@ router.put("/:id", [validarJWT,
   check('id', 'No es un mongoID ').isMongoId(),
   check('id',).custom(helperCliente.existeClienteById),
   check("nombre", 'El nombre es obligatorio').trim().not().isEmpty(),
-  check("nombre", 'El nombre no puede exceder los 50 caracteres').isLength({ max: 50 }),
+  check("nombre", 'El nombre no puede exceder los 50 caracteres').isLength({
+    max: 50
+  }),
   check("tipoPersona", 'El tipo de persona es obligatorio').trim().not().isEmpty(),
   check("tipoDocumento", 'El tipo de documento es obligatorio').trim().not().isEmpty(),
   check("numeroDocumento", 'El numero de documento es obligatorio').trim().not().isEmpty(),
-  check("numeroDocumento", 'El numero de documento no puede exceder los 50 caracteres').isLength({ max: 20 }),
+  check("numeroDocumento", 'El numero de documento no puede exceder los 50 caracteres').isLength({
+    max: 20
+  }),
   check("direccion", 'la direccion es obligatoria').trim().not().isEmpty(),
-  check("direccion", 'la direccion no debe ser mayor a 50 caracteres').isLength({ max: 50 }),
+  check("direccion", 'la direccion no debe ser mayor a 50 caracteres').isLength({
+    max: 50
+  }),
   check("telefono", 'El telefono es obligatorio').trim().not().isEmpty(),
-  check("telefono", 'El telefono no debe ser mayor a 20 caracteres').isLength({ max: 20 }),
+  check("telefono", 'El telefono no debe ser mayor a 20 caracteres').isLength({
+    max: 20
+  }),
   check('email', 'El correo no es valido').trim().isEmail(),
-  check('email', 'El correo no debe ser mayor a 50 caracteres').isLength({ max: 50 }),
+  check('email', 'El correo no debe ser mayor a 50 caracteres').isLength({
+    max: 50
+  }),
   check('email',).custom(helperCliente.existeClienteByEmail),
   check('numeroDocumento',).custom(helperCliente.existeClienteBynumeroDocumento),
 
@@ -73,7 +95,7 @@ router.put("/activar/:id", [validarJWT,
 router.put("/desactivar/:id", [validarJWT,
   check('id', 'No es un mongoID ').isMongoId(),
   check('id',).custom(helperCliente.existeClienteById),
-  validarCampos                             //validar que sea un mongoId 
+  validarCampos //validar que sea un mongoId 
 ], clienteControllers.clientePutDesActivar)
 
 

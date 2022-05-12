@@ -23,7 +23,7 @@ const articuloControllers = {
         articulo
       })
   },
-
+ 
 
 articuloGetQuery: async(req, res = response)=>{
 const query = req.query.query

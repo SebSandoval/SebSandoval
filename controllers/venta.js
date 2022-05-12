@@ -1,14 +1,16 @@
 
 import Venta from "../models/venta.js"
+import Articulo from "../models/articulo.js"
 
+
+
+
+async function disminuirStock(_id,cantidadProducto) {
+  let {stock}=await Articulo.findOne({_id});
+  stock=stock -cantidadProducto;
+  const reg=await Articulo.findByIdAndUpdate(_id,{stock})
+}
 const ventaControllers = {
-
-
-
-
-
-
-
   ventaPost: async (req, res) => {
     const { usuario, cliente, tipoComprobante, serieComprobante, numeroComprobante, fecha, impuesto, total, detalles } = req.body
     const venta = new Venta({ usuario, cliente, tipoComprobante, serieComprobante, numeroComprobante, fecha, impuesto, total, detalles })
@@ -16,8 +18,15 @@ const ventaControllers = {
       e.subtotal = e.cantidadProducto * e.precioProducto
     });
     venta.total = venta.detalles.reduce((x, y) => x += y.subtotal, 0)
+ venta.detalles.forEach(async (e)=>{
+  let id = e._id
+  let {stock}=await Articulo.findOne({id});
+  stock =  stock - e.cantidadProducto
+  console.log( id);
+  await Articulo.findByIdAndUpdate(id,{stock}) 
+}) 
 
-
+//req.body.detalles.map( (articulo) =>  disminuirStock(articulo._id,articulo.cantidad))
     await venta.save()
     res.json(venta)
   },
@@ -64,7 +73,7 @@ const ventaControllers = {
 
   ventaPutActivar: async (req, res) => {
     const { id } = req.params;
-    constventa = await Venta.findByIdAndUpdate(id, { estado: 1 });
+    const venta = await Venta.findByIdAndUpdate(id, { estado: 1 });
 
     res.json({
       venta
@@ -72,7 +81,7 @@ const ventaControllers = {
   },
   ventaPutDesActivar: async (req, res) => {
     const { id } = req.params;
-    constventa = await Venta.findByIdAndUpdate(id, { estado: 0 });
+    const venta = await Venta.findByIdAndUpdate(id, { estado: 0 });
 
     res.json({
       venta
