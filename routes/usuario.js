@@ -34,7 +34,7 @@ router.get('/id/:id', [validarJWT  ,validarJWT,checkRol(["ADMINISTRADOR"]),
     validarCampos //validar que sea un mongoId todas las rutas donde hayan parametros id
 ], usuarioControllers.usuarioGetById)
 
-router.post('/',validarJWT,checkRol(["ADMINISTRADOR"]),[ 
+router.post('/',[ 
     check('rol', 'El rol es obligatorio').trim().not().isEmpty(),
     check('rol','El rol no puede exceder los 20 caracteres').isLength({max:20}),
     check('nombre','El nombre es obligatorio').trim().not().isEmpty(),
