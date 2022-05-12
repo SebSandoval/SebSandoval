@@ -5,28 +5,24 @@ import Articulo from "../models/articulo.js"
 
 
 
-async function disminuirStock(_id,cantidadProducto) {
-  let {stock}=await Articulo.findOne({_id});
-  stock=stock -cantidadProducto;
-  const reg=await Articulo.findByIdAndUpdate(_id,{stock})
+async function disminuirStock(_id, cantidadProducto) {
+  let { stock } = await Articulo.findOne({ _id });
+  stock = stock - cantidadProducto;
+  const reg = await Articulo.findByIdAndUpdate(_id, { stock })
 }
 const ventaControllers = {
   ventaPost: async (req, res) => {
     const { usuario, cliente, tipoComprobante, serieComprobante, numeroComprobante, fecha, impuesto, total, detalles } = req.body
     const venta = new Venta({ usuario, cliente, tipoComprobante, serieComprobante, numeroComprobante, fecha, impuesto, total, detalles })
-    venta.detalles.forEach((e) => {
-      e.subtotal = e.cantidadProducto * e.precioProducto
-    });
+   
+    venta.detalles.forEach( async (e) => {
+      e.subtotal = e.cantidadProducto * e.precioProducto   
+      let { stock } = await Articulo.findById({ _id:e._id });
+      stock = stock - e.cantidadProducto   
+      await Articulo.findByIdAndUpdate(e._id, { stock })
+    })
     venta.total = venta.detalles.reduce((x, y) => x += y.subtotal, 0)
- venta.detalles.forEach(async (e)=>{
-  let id = e._id
-  let {stock}=await Articulo.findOne({id});
-  stock =  stock - e.cantidadProducto
-  console.log( id);
-  await Articulo.findByIdAndUpdate(id,{stock}) 
-}) 
-
-//req.body.detalles.map( (articulo) =>  disminuirStock(articulo._id,articulo.cantidad))
+    //req.body.detalles.map( (articulo) =>  disminuirStock(articulo._id,articulo.cantidad))
     await venta.save()
     res.json(venta)
   },
@@ -99,3 +95,5 @@ const ventaControllers = {
 }
 
 export default ventaControllers
+
+

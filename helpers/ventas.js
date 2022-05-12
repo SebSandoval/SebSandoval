@@ -1,6 +1,7 @@
 
 
 import Venta from "../models/venta.js"
+import Articulo from "../models/articulo.js"
 const helperVenta = {
     existeVentaById: async (id) => {
         const existe = await Venta.findById(id)
@@ -17,7 +18,14 @@ const helperVenta = {
         }
     }, */
  
-
+    articuloStockSuficiente: async(stock)=>{
+        const existe = await Articulo.findOne({ stock })
+        if(existe){
+            if(cantidadProducto > existe.stock){
+                throw new Error(`el Stock es insuficiente`)
+            }
+        }
+            }
 }
 
 

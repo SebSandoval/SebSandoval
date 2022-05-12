@@ -16,6 +16,8 @@ const articuloControllers = {
 
 
   articuloGet: async (req, res = response) => {
+   
+
     const articulo = await Articulo.find()
     .populate('categoria', 'nombre')
       .sort({ 'createdAt': -1 })
@@ -23,7 +25,16 @@ const articuloControllers = {
         articulo
       })
   },
+  articuloGetAct: async (req, res = response) => {
+    const articulo = await Articulo.find({estado:1})
+    .populate('categoria', 'nombre')
+      .sort({ 'createdAt': -1 })
+  res.json({
+        articulo
+      })
+  },
  
+
 
 articuloGetQuery: async(req, res = response)=>{
 const query = req.query.query

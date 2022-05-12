@@ -22,7 +22,15 @@ const categoriaControllers = {
       categoria
     })
   },
+  categoriaGetAct: async (req, res = response) => {
 
+    const categoria = await Categoria.find({estado:1})//param1 la busquea, param2 prop filtradas , si dejo nombre:1 solo muestra nombre tambien con {nombre:0} lo puedo quitar ojo llaves
+      .sort({ 'createdAt': -1 })  //descendente  1 para ascendente
+    //const categoria=await Categoria.find({},{nombre:1});//solo muestra el nombre
+    res.json({
+      categoria
+    })
+  },
   categoriaGetQuery: async (req, res = response) => {
     const query = req.query.query;
     const categoria = await Categoria.find({

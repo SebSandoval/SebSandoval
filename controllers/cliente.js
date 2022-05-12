@@ -22,6 +22,14 @@ const clienteControllers = {
       cliente
     })
   },
+  clienteGetAct: async (req, res = response) => {
+    const cliente = await Cliente.find({estado:1})
+      
+      .sort({ 'createdAt': -1 })
+    res.json({
+      cliente
+    })
+  },
 
   clienteGetQuery: async (req, res = response) => {
     const query = req.query.query;

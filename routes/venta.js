@@ -4,6 +4,7 @@ import { check } from "express-validator";
 import { validarCampos } from "../middlewares/validar-campos.js";
 import helperVenta from "../helpers/ventas.js";
 import { validarJWT } from "../middlewares/validar-jwt.js";
+
 const router = Router()
 
 router.get('/', validarJWT, ventaControllers.ventaGet)
@@ -29,12 +30,15 @@ router.post('/',[validarJWT,
     check("serieComprobante", 'El serieComprobante es obligatorio').trim().not().isEmpty(),
     check("numeroComprobante", 'El numeroComprobante es obligatorio').trim().not().isEmpty(),
     check("impuesto", 'El impuesto es obligatorio').trim().not().isEmpty(),
+    check('stock').custom(helperVenta.articuloStockSuficiente),
+   
     //check("detalles._id", 'El id es obligatorio').trim().not().isEmpty(),
     //check("detalles.precioProducto", 'El precio es obligatorio').trim().not().isEmpty(),
     //check("detalles.nombreProducto", 'El nombre es obligatorio').trim().not().isEmpty(),
     //check("detalles.cantidadProducto", 'La cantidad es obligatoria').trim().not().isEmpty(),
 
     validarCampos
+    
   ], ventaControllers.ventaPost)
 
 

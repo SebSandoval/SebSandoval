@@ -8,6 +8,7 @@ import checkRol from "../middlewares/rol.js";
 const router = Router()
 
 router.get('/',  validarJWT, checkRol(["ADMINISTRADOR"]), clienteControllers.clienteGet)
+router.get('/act',  validarJWT, checkRol(["ADMINISTRADOR"]), clienteControllers.clienteGetAct)
 
 router.get('/query', [validarJWT,
   check('query', 'Los campos son obligatorios').not().isEmpty(),
