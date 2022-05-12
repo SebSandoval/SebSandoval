@@ -4,17 +4,18 @@ import { validarJWT } from "../middlewares/validar-jwt.js";
 import categoriaControllers from '../controllers/categoria.js'
 import helperCategoria from "../helpers/categorias.js";
 import { validarCampos } from "../middlewares/validar-campos.js";
+import checkRol from "../middlewares/rol.js";
 
 const router = Router()
 
-router.get('/', validarJWT,  categoriaControllers.categoriaGet)
+router.get('/', validarJWT,checkRol(["ADMINISTRADOR", "ALMACENISTA"]),  categoriaControllers.categoriaGet)
 
-router.get('/query', [validarJWT,
+router.get('/query', [validarJWT,checkRol(["ADMINISTRADOR", "ALMACENISTA"]),
   check('query', 'Los campos son obligatorios').not().isEmpty(),
   validarCampos
 ], categoriaControllers.categoriaGetQuery)
 //router.get('/id', categoriaControllers.categoriaGetById)
-router.get('/id/:id', [validarJWT,
+router.get('/id/:id', [validarJWT,checkRol(["ADMINISTRADOR", "ALMACENISTA"]),
   check('id', 'No es un mongoID ').isMongoId(),
   check('id',).custom(helperCategoria.existeCategoriaById),
   validarCampos //validar que sea un mongoId todas las rutas donde hayan parametros id
@@ -22,7 +23,7 @@ router.get('/id/:id', [validarJWT,
 
 
 
-router.post('/', [validarJWT,
+router.post('/', [validarJWT,checkRol(["ADMINISTRADOR", "ALMACENISTA"]),
   check("nombre", 'El nombre es obligatorio').trim().not().isEmpty(),
   check("nombre", 'El nombre no puede superar los 20 caracteres').isLength({max:20}),
   check("descripcion", 'La descripcion es obligatoria').trim().not().isEmpty(),
@@ -33,7 +34,7 @@ router.post('/', [validarJWT,
 
 
 
-router.put("/:id", [validarJWT,
+router.put("/:id", [validarJWT,checkRol(["ADMINISTRADOR", "ALMACENISTA"]),
   check('id', 'No es un mongoID ').isMongoId(),
   check("nombre", 'El nombre es obligatorio').trim().not().isEmpty(),
   check("nombre", 'El nombre no puede superar los 20 caracteres').isLength({max:20}),
@@ -43,13 +44,13 @@ router.put("/:id", [validarJWT,
   validarCampos
 ], categoriaControllers.categoriaPut)
 
-router.put("/activar/:id", [validarJWT,
+router.put("/activar/:id", [validarJWT,checkRol(["ADMINISTRADOR", "ALMACENISTA"]),
   check('id', 'No es un mongoID ').isMongoId(),
   check('id',).custom(helperCategoria.existeCategoriaById),
   validarCampos
 ], categoriaControllers.categoriaPutActivar)
 
-router.put("/desactivar/:id", [validarJWT,
+router.put("/desactivar/:id", [validarJWT,checkRol(["ADMINISTRADOR", "ALMACENISTA"]),
   check('id', 'No es un mongoID ').isMongoId(),
   check('id',).custom(helperCategoria.existeCategoriaById),
   validarCampos                             //validar que sea un mongoId 
@@ -57,7 +58,7 @@ router.put("/desactivar/:id", [validarJWT,
 
 
 
-router.delete("/:id", [validarJWT,
+router.delete("/:id", [validarJWT,checkRol(["ADMINISTRADOR", "ALMACENISTA"]),
   check('id', 'No es un mongoID ').isMongoId(),
   check('id',).custom(helperCategoria.existeCategoriaById),
   validarCampos

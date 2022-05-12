@@ -4,10 +4,10 @@ import { check } from "express-validator";
 import { validarCampos } from "../middlewares/validar-campos.js";
 import helperCliente from "../helpers/clientes.js";
 import { validarJWT } from "../middlewares/validar-jwt.js";
-//import checkRol from "../middlewares/rol.js";
+import checkRol from "../middlewares/rol.js";
 const router = Router()
 
-router.get('/', validarJWT, clienteControllers.clienteGet)
+router.get('/',  validarJWT, checkRol(["ADMINISTRADOR"]), clienteControllers.clienteGet)
 
 router.get('/query', [validarJWT,
   check('query', 'Los campos son obligatorios').not().isEmpty(),
