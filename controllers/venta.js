@@ -16,10 +16,16 @@ const ventaControllers = {
     const venta = new Venta({ usuario, cliente, tipoComprobante, serieComprobante, numeroComprobante, fecha, impuesto, total, detalles })
    
     venta.detalles.forEach( async (e) => {
-      e.subtotal = e.cantidadProducto * e.precioProducto   
+      e.subtotal = (e.cantidadProducto * e.precioProducto)- ((e.cantidadProducto * e.precioProducto)*e.descuentoProducto)/100 
+    
       let { stock } = await Articulo.findById({ _id:e._id });
       stock = stock - e.cantidadProducto   
+      if(stock<0){
+        console.log("stock insuficiente del producto " + e.nombreProducto);
+        
+      }else if(stock >=0){
       await Articulo.findByIdAndUpdate(e._id, { stock })
+      }
     })
     venta.total = venta.detalles.reduce((x, y) => x += y.subtotal, 0)
     //req.body.detalles.map( (articulo) =>  disminuirStock(articulo._id,articulo.cantidad))

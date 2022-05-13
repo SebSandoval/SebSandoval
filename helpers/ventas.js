@@ -18,14 +18,9 @@ const helperVenta = {
         }
     }, */
  
-    articuloStockSuficiente: async(stock)=>{
-        const existe = await Articulo.findOne({ stock })
-        if(existe){
-            if(cantidadProducto > existe.stock){
-                throw new Error(`el Stock es insuficiente`)
-            }
-        }
-            }
+     articuloStockSuficiente: async(stock)=>{
+        
+            }  
 }
 
 

@@ -30,15 +30,16 @@ router.post('/',[validarJWT,
     check("serieComprobante", 'El serieComprobante es obligatorio').trim().not().isEmpty(),
     check("numeroComprobante", 'El numeroComprobante es obligatorio').trim().not().isEmpty(),
     check("impuesto", 'El impuesto es obligatorio').trim().not().isEmpty(),
-    check('stock').custom(helperVenta.articuloStockSuficiente),
+    validarCampos
+    
+  
    
     //check("detalles._id", 'El id es obligatorio').trim().not().isEmpty(),
     //check("detalles.precioProducto", 'El precio es obligatorio').trim().not().isEmpty(),
     //check("detalles.nombreProducto", 'El nombre es obligatorio').trim().not().isEmpty(),
     //check("detalles.cantidadProducto", 'La cantidad es obligatoria').trim().not().isEmpty(),
 
-    validarCampos
-    
+   
   ], ventaControllers.ventaPost)
 
 

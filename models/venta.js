@@ -54,6 +54,10 @@ const VentaSchema = mongoose.Schema({
         type: Number,
         required: true,
       },
+      descuentoProducto:{
+        type: Number,
+        default: 0,
+      },
 
       subtotal: {
         type: Number,

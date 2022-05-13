@@ -4,7 +4,7 @@
  * @returns 
  */
 
-const checkRol = (roles) =>(req, res,  next)=>{
+ const checkRol = (roles) =>(req, res,  next)=>{
 
     try{
         const {usuario} = req

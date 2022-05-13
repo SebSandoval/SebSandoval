@@ -54,7 +54,7 @@ router.put("/:id", [validarJWT  ,
 
     check('nombre','El nombre es obligatorio').trim().not().isEmpty(),
     check('nombre','El nombre no puede exceder los 50 caracteres').isLength({max:50}),
-    check('password', 'El password debe ser de mas de 6 caracteres').isLength({min:6}),
+    //check('password', 'El password debe ser de mas de 6 caracteres').isLength({min:6}),
     check('email', 'El correo no es valido').trim().isEmail(),
     check('email','El email no puede exceder los 50 caracteres').isLength({max:50}),
     check('email').custom(helperUsuario.existeUsuarioByemail),
