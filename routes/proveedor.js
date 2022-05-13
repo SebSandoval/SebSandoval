@@ -8,6 +8,7 @@ import { validarJWT } from "../middlewares/validar-jwt.js";
 const router = Router()
 
 router.get('/', validarJWT, proveedorControllers.proveedorGet)
+router.get('/act', validarJWT, proveedorControllers.proveedorGetAct)
 
 router.get('/query', [validarJWT,
     check('query', 'Los campos son obligatorios').not().isEmpty(),

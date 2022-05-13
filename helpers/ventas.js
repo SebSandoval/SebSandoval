@@ -17,10 +17,51 @@ const helperVenta = {
             throw new Error(`Ya existe Venta con el nombre:  ${nombre}`)
         }
     }, */
- 
-     articuloStockSuficiente: async(stock)=>{
-        
-            }  
+
+    articuloStockSuficiente: () => {
+
+        return async (req, res, next) => {
+            const { detalles } = req.body
+            if (detalles) {
+
+                detalles.forEach(async (detalle) => {
+                    const articulo = await Articulo.findById(detalle._id)
+                    if (articulo) {
+                        if ((articulo.stock - detalle.cantidadProducto) < 0) {
+                            throw new Error("Stock insuficiente " + articulo.nombre)
+                        }
+                    }
+
+                })
+            }
+            next()
+        }
+
+
+
+    },
+
+    articuloStock: async (detalles) => {
+
+        if (detalles) {
+            for (let i = 0; i < detalles.length; i++) {
+                const detalle = detalles[i]
+                const articulo = await Articulo.findById(detalle._id)
+                if (articulo) {
+                    if ((articulo.stock - detalle.cantidadProducto) < 0) {
+                        throw new Error(`Stock insuficiente del articulo: ${articulo.nombre}`)
+                    }
+                }
+
+            }
+
+        }
+
+    }
+
+
+
+
 }
 
 

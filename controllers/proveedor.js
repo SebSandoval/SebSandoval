@@ -22,6 +22,14 @@ const proveedorControllers = {
       proveedor
     })
   },
+  proveedorGetAct: async (req, res = response) => {
+    const proveedor = await Proveedor.find({estado:1})
+      
+      .sort({ 'createdAt': -1 })
+    res.json({
+      proveedor
+    })
+  },
   proveedorGetQuery: async (req, res = response) => {
     const query = req.query.query;
     const proveedor = await Proveedor.find({

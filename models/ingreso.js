@@ -15,6 +15,14 @@ const IngresoSchema = mongoose.Schema({
         type: Number,
         required: true,
     },
+    numeroComprobante: {
+      type: Number,
+      required: true,
+  },
+  fecha: {
+    type: Date,
+    default: Date.now,
+  },
 
     impuesto: {
         type: Number,
@@ -22,6 +30,31 @@ const IngresoSchema = mongoose.Schema({
     total: {
         type: Number,
     },
+    detalles: [
+        {
+          _id: {
+            type: String,
+            required: true,
+          },
+          nombreProducto: {
+            type: String,
+            required: true,
+          },
+          precioProducto: {
+            type: Number,
+            required: true,
+          },
+          cantidadProducto: {
+            type: Number,
+            required: true,
+          },
+         
+          subtotal: {
+            type: Number,
+            default: 0,
+          },
+        },
+      ],
     estado: {
         type: Number,
         default: 1
