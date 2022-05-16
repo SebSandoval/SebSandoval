@@ -38,17 +38,18 @@ const ventaControllers = {
     })
   },
 
-  ventaGetQuery: async (req, res = response) => {
+  /* ventaGetQuery: async (req, res = response) => {
     const query = req.query.query
     const venta = await Venta.find({
       $or: [
-        { nombre: new RegExp(query, 'i') },
+        { cliente: new RegExp(query, 'i') }
+        
 
       ]
-    })
+    }) 
       .sort({ 'createdAt': -1 })
     res.json({ venta })
-  },
+  },*/
   ventaGetById: async (req, res) => {
     //const {id}= req.query
     const { id } = req.params

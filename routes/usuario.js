@@ -14,8 +14,9 @@ router.get('/',validarJWT, checkRol(["ADMINISTRADOR"]) ,usuarioControllers.usuar
 
 router.post('/login', [
 
-    check('email', 'El correo no es valido').isEmail(),
-    check('password', 'El password es obligatorio').not().isEmpty(),
+    check('email', 'El correo no es valido').trim().isEmail(),
+    check('password', 'El password es obligatorio').trim().not().isEmpty(),
+    validarCampos
    
 ], usuarioControllers.usuarioLogin)
 

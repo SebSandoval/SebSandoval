@@ -12,7 +12,6 @@ router.get('/', validarJWT,checkRol(["ADMINISTRADOR", "ALMACENISTA"]), articuloC
 
 router.get('/act', validarJWT,checkRol(["ADMINISTRADOR", "ALMACENISTA", "VENDEDOR"]), articuloControllers.articuloGetAct)
 
-router.get('/act', validarJWT,checkRol(["ADMINISTRADOR", "ALMACENISTA"]), articuloControllers.articuloGetAct)
 
 
 router.get('/query', [validarJWT,checkRol(["ADMINISTRADOR"]),

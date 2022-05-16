@@ -35,8 +35,8 @@ const clienteControllers = {
     const query = req.query.query;
     const cliente = await Cliente.find({
       $or: [
-        { nombre: new RegExp(query, 'i') },
-        { descripcion: new RegExp(query, 'i') },
+        { nombre: new RegExp(query, 'i') }
+        
       ]
     })//param1 la busquea, param2 prop filtradas , si dejo nombre:1 solo muestra nombre tambien con {nombre:0} lo puedo quitar ojo llaves
       .sort({ 'createdAt': -1 })  //descendente  1 para ascendente

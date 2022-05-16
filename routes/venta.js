@@ -9,10 +9,10 @@ const router = Router()
 
 router.get('/', validarJWT, ventaControllers.ventaGet)
 
-router.get('/query', [validarJWT,
+/* router.get('/query', [validarJWT,
     check('query', 'Los campos son obligatorios').not().isEmpty(),
     validarCampos
-  ], ventaControllers.ventaGetQuery)
+  ], ventaControllers.ventaGetQuery) */
   //router.get('/id', ventaControllers.ventaGetById)
   router.get('/id/:id', [validarJWT,
     check('id', 'No es un mongoID ').isMongoId(),
