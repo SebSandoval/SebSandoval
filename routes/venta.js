@@ -31,6 +31,7 @@ router.post('/',[validarJWT,
     check("numeroComprobante", 'El numeroComprobante es obligatorio').trim().not().isEmpty(),
     check("impuesto", 'El impuesto es obligatorio').trim().not().isEmpty(),
     check("detalles").custom(helperVenta.articuloStock),
+    check("detalles").custom(helperVenta.cantidadVenta),
     validarCampos
    
 

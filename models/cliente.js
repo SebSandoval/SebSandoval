@@ -7,10 +7,7 @@ const ClienteSchema=mongoose.Schema({
     maxlength : 50
 
 },
-tipoPersona: {
-    type: String,
-    required : true,
-},
+
  
 tipoDocumento: {
     type: String,

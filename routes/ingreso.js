@@ -24,8 +24,16 @@ router.get('/query', [validarJWT,
   
 
 router.post('/', [validarJWT,
+  check("usuario", 'El usuario es obligatorio').trim().not().isEmpty(),
+  check("proveedor", 'El proveedor es obligatorio').trim().not().isEmpty(),
+  check("tipoComprobante", 'El tipoComprobante es obligatorio').trim().not().isEmpty(),
+  check("serieComprobante", 'El serieComprobante es obligatorio').trim().not().isEmpty(),
+  check("numeroComprobante", 'El numeroComprobante es obligatorio').trim().not().isEmpty(),
+  check("impuesto", 'El impuesto es obligatorio').trim().not().isEmpty(),
+  check("detalles").custom(helperIngreso.cantidadIngreso),
+  validarCampos
+ 
     
-    validarCampos
   ],ingresoControllers.ingresoPost)
 
 

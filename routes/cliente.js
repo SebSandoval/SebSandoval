@@ -7,8 +7,8 @@ import { validarJWT } from "../middlewares/validar-jwt.js";
 import checkRol from "../middlewares/rol.js";
 const router = Router()
 
-router.get('/',  validarJWT, checkRol(["ADMINISTRADOR"]), clienteControllers.clienteGet)
-router.get('/act',  validarJWT, checkRol(["ADMINISTRADOR"]), clienteControllers.clienteGetAct)
+router.get('/',  validarJWT, checkRol(["ADMINISTRADOR", "VENDEDOR"]), clienteControllers.clienteGet)
+router.get('/act',  validarJWT, checkRol(["ADMINISTRADOR", "VENDEDOR"]), clienteControllers.clienteGetAct)
 
 router.get('/query', [validarJWT,
   check('query', 'Los campos son obligatorios').not().isEmpty(),
@@ -27,7 +27,7 @@ router.post('/', [validarJWT,
   check("nombre", 'El nombre no puede exceder los 50 caracteres').isLength({
     max: 50
   }),
-  check("tipoPersona", 'El tipo de persona es obligatorio').trim().not().isEmpty(),
+
   check("tipoDocumento", 'El tipo de documento es obligatorio').trim().not().isEmpty(),
   check("numeroDocumento", 'El numero de documento es obligatorio').trim().not().isEmpty(),
   check("numeroDocumento", 'El numero de documento no puede exceder los 20 caracteres').isLength({

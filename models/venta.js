@@ -40,15 +40,15 @@ const VentaSchema = mongoose.Schema({
     {
       _id: {
         type: String,
-        required: true,
+        
       },
       nombreProducto: {
         type: String,
-        required: true,
+        
       },
       precioProducto: {
         type: Number,
-        required: true,
+        
       },
       cantidadProducto: {
         type: Number,
