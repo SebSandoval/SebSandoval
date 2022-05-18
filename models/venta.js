@@ -52,7 +52,7 @@ const VentaSchema = mongoose.Schema({
       },
       cantidadProducto: {
         type: Number,
-        required: true,
+        required:true,
       },
       descuentoProducto:{
         type: Number,
