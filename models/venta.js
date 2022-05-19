@@ -41,10 +41,12 @@ const VentaSchema = mongoose.Schema({
       _id: {
         type: String,
         
+        
       },
       nombreProducto: {
         type: String,
         
+
       },
       precioProducto: {
         type: Number,

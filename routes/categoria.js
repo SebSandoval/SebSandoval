@@ -11,7 +11,7 @@ const router = Router()
 router.get('/', validarJWT,checkRol(["ADMINISTRADOR", "ALMACENISTA"]),  categoriaControllers.categoriaGet)
 router.get('/act', validarJWT,checkRol(["ADMINISTRADOR", "ALMACENISTA"]),  categoriaControllers.categoriaGetAct)
 router.get('/query', [validarJWT,checkRol(["ADMINISTRADOR", "ALMACENISTA"]),
-  check('query', 'Los campos son obligatorios').not().isEmpty(),
+ 
   validarCampos
 ], categoriaControllers.categoriaGetQuery)
 //router.get('/id', categoriaControllers.categoriaGetById)

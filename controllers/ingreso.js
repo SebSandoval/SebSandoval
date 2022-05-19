@@ -9,15 +9,10 @@ const ingresoControllers = {
     const { usuario, proveedor, tipoComprobante, serieComprobante, numeroComprobante, fecha,  impuesto, total, detalles  } = req.body
     const ingreso = new Ingreso({  usuario, proveedor, tipoComprobante, serieComprobante, numeroComprobante, fecha, impuesto, total, detalles  })
     ingreso.detalles.forEach( async (e)=> {
-      e.subtotal = e.cantidadProducto* e.precioProducto
-    
+      e.subtotal = e.cantidadProducto* e.precioProducto    
       let { stock } = await Articulo.findById({ _id:e._id });
-      stock = stock + e.cantidadProducto   
-     
-      await Articulo.findByIdAndUpdate(e._id, { stock })
-      
-
-    
+      stock = stock + e.cantidadProducto        
+      await Articulo.findByIdAndUpdate(e._id, { stock })  
     })
     ingreso.total = ingreso.detalles.reduce((x, y) => x += y.subtotal, 0)
     await ingreso.save()
@@ -76,15 +71,24 @@ const ingresoControllers = {
   ingresoPutActivar: async (req, res) => {
     const { id } = req.params;
     const ingreso = await Ingreso.findByIdAndUpdate(id, { estado: 1 });
-
+    ingreso.detalles.forEach( async (e)=> {
+      let { stock } = await Articulo.findById({ _id:e._id });
+      stock = stock + e.cantidadProducto        
+      await Articulo.findByIdAndUpdate(e._id, { stock })  
+    })
     res.json({
       ingreso
     })
   },
+  
   ingresoPutDesActivar: async (req, res) => {
     const { id } = req.params;
     const ingreso = await Ingreso.findByIdAndUpdate(id, { estado: 0 });
-
+    ingreso.detalles.forEach( async (e)=> {
+      let { stock } = await Articulo.findById({ _id:e._id });
+      stock = stock - e.cantidadProducto        
+      await Articulo.findByIdAndUpdate(e._id, { stock })  
+    })
     res.json({
       ingreso
     })

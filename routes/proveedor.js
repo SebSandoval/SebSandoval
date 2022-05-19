@@ -11,7 +11,6 @@ router.get('/', validarJWT, proveedorControllers.proveedorGet)
 router.get('/act', validarJWT, proveedorControllers.proveedorGetAct)
 
 router.get('/query', [validarJWT,
-    check('query', 'Los campos son obligatorios').not().isEmpty(),
     validarCampos
 ], proveedorControllers.proveedorGetQuery)
 

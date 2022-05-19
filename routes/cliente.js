@@ -11,7 +11,6 @@ router.get('/',  validarJWT, checkRol(["ADMINISTRADOR", "VENDEDOR"]), clienteCon
 router.get('/act',  validarJWT, checkRol(["ADMINISTRADOR", "VENDEDOR"]), clienteControllers.clienteGetAct)
 
 router.get('/query', [validarJWT,
-  check('query', 'Los campos son obligatorios').not().isEmpty(),
   validarCampos
 ], clienteControllers.clienteGetQuery)
 

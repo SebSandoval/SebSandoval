@@ -15,6 +15,7 @@ const ventaControllers = {
     const { usuario, cliente, tipoComprobante, serieComprobante, numeroComprobante, fecha, impuesto, total, detalles } = req.body
     const venta = new Venta({ usuario, cliente, tipoComprobante, serieComprobante, numeroComprobante, fecha, impuesto, total, detalles })
 
+    
     venta.detalles.forEach(async (e) => {
       e.subtotal = (e.cantidadProducto * e.precioProducto) - ((e.cantidadProducto * e.precioProducto) * e.descuentoProducto) / 100
       let { stock } = await Articulo.findById({ _id: e._id });
@@ -71,7 +72,11 @@ const ventaControllers = {
   ventaPutActivar: async (req, res) => {
     const { id } = req.params;
     const venta = await Venta.findByIdAndUpdate(id, { estado: 1 });
-
+    venta.detalles.forEach(async (e) => {
+      let { stock } = await Articulo.findById({ _id: e._id });
+      stock = stock - e.cantidadProducto
+      await Articulo.findByIdAndUpdate(e._id, { stock })
+    })
     res.json({
       venta
     })
@@ -79,7 +84,11 @@ const ventaControllers = {
   ventaPutDesActivar: async (req, res) => {
     const { id } = req.params;
     const venta = await Venta.findByIdAndUpdate(id, { estado: 0 });
-
+    venta.detalles.forEach(async (e) => {
+      let { stock } = await Articulo.findById({ _id: e._id });
+      stock = stock + e.cantidadProducto
+      await Articulo.findByIdAndUpdate(e._id, { stock })
+    })
     res.json({
       venta
     })

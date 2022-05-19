@@ -10,7 +10,6 @@ router.get('/', validarJWT, ingresoControllers.ingresoGet)
 
 
 router.get('/query', [validarJWT,
-    check('query', 'Los campos son obligatorios').not().isEmpty(),
     validarCampos
   ], ingresoControllers.ingresoGetQuery)
   //router.get('/id', IngresoControllers.IngresoGetById)

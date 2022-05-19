@@ -15,7 +15,6 @@ router.get('/act', validarJWT,checkRol(["ADMINISTRADOR", "ALMACENISTA", "VENDEDO
 
 
 router.get('/query', [validarJWT,checkRol(["ADMINISTRADOR"]),
-  check('query', 'Los campos son obligatorios').not().isEmpty(),
   validarCampos
 ], articuloControllers.articuloGetQuery)
 

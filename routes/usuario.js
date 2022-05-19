@@ -23,7 +23,6 @@ router.post('/login', [
 
 
 router.get('/query', [validarJWT,checkRol(["ADMINISTRADOR"]),
-    check('query', 'Los campos son obligatorios').not().isEmpty(),
     validarCampos
 
 ], usuarioControllers.usuarioGetQuery)
