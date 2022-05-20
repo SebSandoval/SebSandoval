@@ -14,7 +14,7 @@ router.get('/act', validarJWT,checkRol(["ADMINISTRADOR", "ALMACENISTA", "VENDEDO
 
 
 
-router.get('/query', [validarJWT,checkRol(["ADMINISTRADOR"]),
+router.get('/query', [validarJWT,checkRol(["ADMINISTRADOR", "ALMACENISTA", "VENDEDOR"]),
   validarCampos
 ], articuloControllers.articuloGetQuery)
 

@@ -7,20 +7,20 @@ import { validarJWT } from "../middlewares/validar-jwt.js";
 import checkRol from "../middlewares/rol.js";
 const router = Router()
 
-router.get('/',  validarJWT, checkRol(["ADMINISTRADOR", "VENDEDOR"]), clienteControllers.clienteGet)
-router.get('/act',  validarJWT, checkRol(["ADMINISTRADOR", "VENDEDOR"]), clienteControllers.clienteGetAct)
+router.get('/', validarJWT, checkRol(["ADMINISTRADOR", "VENDEDOR"]), clienteControllers.clienteGet)
+router.get('/act', validarJWT, checkRol(["ADMINISTRADOR", "VENDEDOR"]), clienteControllers.clienteGetAct)
 
 router.get('/query', [validarJWT,
   validarCampos
 ], clienteControllers.clienteGetQuery)
 
-router.get('/id/:id', [validarJWT,
+router.get('/id/:id', [validarJWT, checkRol(["ADMINISTRADOR", "VENDEDOR"]),
   check('id', 'No es un mongoID ').isMongoId(),
   check('id',).custom(helperCliente.existeClienteById),
   validarCampos //validar que sea un mongoId todas las rutas donde hayan parametros id
 ], clienteControllers.clienteGetById)
 
-router.post('/', [validarJWT,
+router.post('/', [validarJWT, checkRol(["ADMINISTRADOR", "VENDEDOR"]),
 
   check("nombre", 'El nombre es obligatorio').trim().not().isEmpty(),
   check("nombre", 'El nombre no puede exceder los 50 caracteres').isLength({
@@ -54,7 +54,7 @@ router.post('/', [validarJWT,
 
 
 
-router.put("/:id", [validarJWT,
+router.put("/:id", [validarJWT, checkRol(["ADMINISTRADOR", "VENDEDOR"]),
   check('id', 'No es un mongoID ').isMongoId(),
   check('id',).custom(helperCliente.existeClienteById),
   check("nombre", 'El nombre es obligatorio').trim().not().isEmpty(),
@@ -85,14 +85,14 @@ router.put("/:id", [validarJWT,
   validarCampos
 ], clienteControllers.clientePut)
 
-router.put("/activar/:id", [validarJWT,
+router.put("/activar/:id", [validarJWT,checkRol(["ADMINISTRADOR", "VENDEDOR"]),
   check('id', 'No es un mongoID ').isMongoId(),
   check('id',).custom(helperCliente.existeClienteById),
 
   validarCampos
 ], clienteControllers.clientePutActivar)
 
-router.put("/desactivar/:id", [validarJWT,
+router.put("/desactivar/:id", [validarJWT,checkRol(["ADMINISTRADOR", "VENDEDOR"]),
   check('id', 'No es un mongoID ').isMongoId(),
   check('id',).custom(helperCliente.existeClienteById),
   validarCampos //validar que sea un mongoId 
@@ -100,7 +100,7 @@ router.put("/desactivar/:id", [validarJWT,
 
 
 
-router.delete('/:id', [validarJWT,
+router.delete('/:id', [validarJWT,checkRol(["ADMINISTRADOR", "VENDEDOR"]),
   check('id', 'No es un mongoID ').isMongoId(),
   check('id',).custom(helperCliente.existeClienteById),
   validarCampos

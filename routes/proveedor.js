@@ -4,17 +4,18 @@ import { check } from "express-validator";
 import { validarCampos } from "../middlewares/validar-campos.js";
 import helperProveedor from "../helpers/proveedor.js";
 import { validarJWT } from "../middlewares/validar-jwt.js";
+import checkRol from "../middlewares/rol.js";
 
 const router = Router()
 
-router.get('/', validarJWT, proveedorControllers.proveedorGet)
-router.get('/act', validarJWT, proveedorControllers.proveedorGetAct)
+router.get('/', validarJWT, checkRol(["ADMINISTRADOR", "ALMACENISTA"]), proveedorControllers.proveedorGet)
+router.get('/act', validarJWT,checkRol(["ADMINISTRADOR", "ALMACENISTA"]), proveedorControllers.proveedorGetAct)
 
-router.get('/query', [validarJWT,
+router.get('/query', [validarJWT,checkRol(["ADMINISTRADOR", "ALMACENISTA"]),
     validarCampos
 ], proveedorControllers.proveedorGetQuery)
 
-router.get('/id/:id', [ validarJWT,
+router.get('/id/:id', [ validarJWT,checkRol(["ADMINISTRADOR", "ALMACENISTA"]),
     check('id', 'No es un mongoID ').isMongoId(),
     check('id',).custom(helperProveedor.existeProveedorById),
     validarCampos //validar que sea un mongoId todas las rutas donde hayan parametros id
@@ -22,7 +23,7 @@ router.get('/id/:id', [ validarJWT,
 
 
 
-router.post('/', [validarJWT,
+router.post('/', [validarJWT,checkRol(["ADMINISTRADOR", "ALMACENISTA"]),
     check("nombre", 'El nombre es obligatorio').trim().not().isEmpty(),
     check("nombre", 'El nombre no puede exceder los 50 caracteres').isLength({ max: 50 }),
     check("tipoDocumento", 'El tipo de documento es obligatorio').trim().not().isEmpty(),
@@ -42,7 +43,7 @@ router.post('/', [validarJWT,
 
 
 
-router.put("/:id", [validarJWT,
+router.put("/:id", [validarJWT,checkRol(["ADMINISTRADOR", "ALMACENISTA"]),
     check('id', 'No es un mongoID ').isMongoId(),
     check("nombre", 'El nombre es obligatorio').trim().not().isEmpty(),
     check("nombre", 'El nombre no puede exceder los 50 caracteres').isLength({ max: 50 }),
@@ -62,19 +63,19 @@ router.put("/:id", [validarJWT,
     validarCampos
 ], proveedorControllers.proveedorPut)
 
-router.put("/activar/:id", [validarJWT,
+router.put("/activar/:id", [validarJWT,checkRol(["ADMINISTRADOR", "ALMACENISTA"]),
     check('id', 'No es un mongoID ').isMongoId(),
     check('id',).custom(helperProveedor.existeProveedorById),
     validarCampos
 ], proveedorControllers.proveedorPutActivar)
 
-router.put("/desactivar/:id", [validarJWT,
+router.put("/desactivar/:id", [validarJWT,checkRol(["ADMINISTRADOR", "ALMACENISTA"]),
     check('id', 'No es un mongoID ').isMongoId(),
     check('id',).custom(helperProveedor.existeProveedorById),
     validarCampos                             //validar que sea un mongoId 
 ], proveedorControllers.proveedorPutDesActivar)
 
-router.delete('/:id', [validarJWT,
+router.delete('/:id', [validarJWT,checkRol(["ADMINISTRADOR", "ALMACENISTA"]),
     check('id', 'No es un mongoID ').isMongoId(),
     check('id',).custom(helperProveedor.existeProveedorById),
     validarCampos

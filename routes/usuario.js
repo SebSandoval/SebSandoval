@@ -28,6 +28,7 @@ router.get('/query', [validarJWT,checkRol(["ADMINISTRADOR"]),
 ], usuarioControllers.usuarioGetQuery)
 
 
+
 router.get('/id/:id', [validarJWT  ,validarJWT,checkRol(["ADMINISTRADOR"]),
     check('id', 'No es un mongoID ').isMongoId(),
     check('id',).custom(helperUsuario.existeUsuarioById),
