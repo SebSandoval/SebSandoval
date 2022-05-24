@@ -34,7 +34,7 @@ router.post('/',[validarJWT,checkRol(["ADMINISTRADOR", "VENDEDOR"]),
     check("numeroComprobante", 'El numeroComprobante es obligatorio').trim().not().isEmpty(),
     check("impuesto", 'El impuesto es obligatorio').trim().not().isEmpty(),
     check("detalles").custom(helperVenta.articuloStock),
-    check("detalles").custom(helperVenta.cantidadVenta),
+    check("detalles").custom(helperVenta.validacionesDetalles),
     validarCampos
    
 

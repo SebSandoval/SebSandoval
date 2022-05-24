@@ -1,10 +1,12 @@
 import mongoose from 'mongoose'
 
+
+
 const ArticuloSchema = mongoose.Schema({
     codigo: {
         type: Number,
         unique: true,
-
+        
     },
     nombre: {
         type: String,
