@@ -6,11 +6,13 @@ import { validarCampos } from "../middlewares/validar-campos.js";
 import { validarJWT } from "../middlewares/validar-jwt.js";
 import checkRol from "../middlewares/rol.js";
 
+
 const router = Router()
 router.get('/', validarJWT,checkRol(["ADMINISTRADOR", "ALMACENISTA"]), articuloControllers.articuloGet)
 
 
 router.get('/act', validarJWT,checkRol(["ADMINISTRADOR", "ALMACENISTA", "VENDEDOR"]), articuloControllers.articuloGetAct)
+router.get('/actIngreso', validarJWT,checkRol(["ADMINISTRADOR", "ALMACENISTA", "VENDEDOR"]), articuloControllers.articuloGetActIngreso)
 
 
 
@@ -24,6 +26,17 @@ router.get('/id/:id', [validarJWT,checkRol(["ADMINISTRADOR", "ALMACENISTA"]),
   check('id',).custom(helperArticulo.existeArticuloById),
   validarCampos //validar que sea un mongoId todas las rutas donde hayan parametros id
 ], articuloControllers.articuloGetById)
+
+
+
+router.get('/pdf');
+
+
+
+
+
+
+
 
 router.post('/', [validarJWT,checkRol(["ADMINISTRADOR", "ALMACENISTA"]),
   check("codigo", 'El codigo es obligatorio').trim().not().isEmpty(),

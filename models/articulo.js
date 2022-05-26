@@ -7,6 +7,7 @@ const ArticuloSchema = mongoose.Schema({
         type: Number,
         unique: true,
         
+        
     },
     nombre: {
         type: String,

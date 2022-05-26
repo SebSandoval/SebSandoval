@@ -17,7 +17,13 @@ const helperVenta = {
             throw new Error(`Ya existe Venta con el nombre:  ${nombre}`)
         }
     }, */
+    existeVentaByNumero: async (numeroComprobante) => {
+        const existe = await Venta.findOne({ numeroComprobante })
 
+        if (existe) {
+            throw new Error(`El numero de Comprobante: ${numeroComprobante} ya existe `)
+        }
+    },
     articuloStockSuficiente: () => {
 
         return async (req, res, next) => {
@@ -71,8 +77,8 @@ const helperVenta = {
                 else if(detalle.precioProducto==""){
                     throw new Error(`El precio del articulo no puede estar vacio`) 
                 }
-                else if(detalle.descuentoProducto<0){
-                    throw new Error(`El descuento no puede ser menor a 0`) 
+                else if(detalle.descuentoProducto<0 || detalle.descuentoProducto>100){
+                    throw new Error(`Descuento incorrecto`) 
                 }
             }
         }

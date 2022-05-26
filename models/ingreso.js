@@ -21,7 +21,7 @@ const IngresoSchema = mongoose.Schema({
   },
   fecha: {
     type: Date,
-    default: Date.now,
+    
   },
 
     impuesto: {

@@ -5,9 +5,13 @@ import Articulo from "../models/articulo.js"
 const ingresoControllers = {
 
 
+
   ingresoPost: async (req, res) => {
-    const { usuario, proveedor, tipoComprobante, serieComprobante, numeroComprobante, fecha,  impuesto, total, detalles  } = req.body
-    const ingreso = new Ingreso({  usuario, proveedor, tipoComprobante, serieComprobante, numeroComprobante, fecha, impuesto, total, detalles  })
+    const { usuario, proveedor, tipoComprobante, serieComprobante, numeroComprobante,  impuesto,  detalles  } = req.body
+    const fecha = new Date(Date.now() + (-1*new Date().getTimezoneOffset()*60000)).toISOString()
+    
+    
+    const ingreso = new Ingreso({  usuario, proveedor, tipoComprobante, serieComprobante, numeroComprobante, fecha, impuesto,  detalles  })
     ingreso.detalles.forEach( async (e)=> {
       e.subtotal = e.cantidadProducto* e.precioProducto    
       let { stock } = await Articulo.findById({ _id:e._id });
@@ -15,6 +19,10 @@ const ingresoControllers = {
       await Articulo.findByIdAndUpdate(e._id, { stock })  
     })
     ingreso.total = ingreso.detalles.reduce((x, y) => x += y.subtotal, 0)
+    
+
+
+
     await ingreso.save()
     res.json(ingreso)
   },

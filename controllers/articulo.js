@@ -26,14 +26,33 @@ const articuloControllers = {
     })
   },
   articuloGetAct: async (req, res = response) => {
-    const articulo = await Articulo.find({ estado: 1 })
+    const articulo = await Articulo.find({
+       estado: 1,
+
+    })
+    //lean convierte un vjson en un json normal
+    .lean()
+
       .populate('categoria', 'nombre')
       .sort({ 'createdAt': -1 })
+
+      const articuloSearch=articulo.filter(e=>e.stock>1)
+    res.json({
+      articulo: articuloSearch
+    })
+  },
+
+articuloGetActIngreso: async (req, res = response) => {
+    const articulo = await Articulo.find({estado: 1})
+    
+
+      .populate('categoria', 'nombre')
+      .sort({ 'createdAt': -1 })
+
     res.json({
       articulo
     })
   },
-
 
 
   articuloGetQuery: async (req, res = response) => {
@@ -91,7 +110,7 @@ const articuloControllers = {
     res.json({
       articulo
     })
-  }
+  },
 
 }
 
