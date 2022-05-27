@@ -43,7 +43,13 @@ validacionesDetalles: async (detalles) => {
             }
         }
     }
-}
+},
+detallesVacio: async (detalles) => {
+
+    if(detalles.length ==0){
+     throw new Error(`Agregue productos al ingreso`)
+    }
+},
 }
 
 

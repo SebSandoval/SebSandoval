@@ -33,6 +33,7 @@ router.post('/', [validarJWT,checkRol(["ADMINISTRADOR", "ALMACENISTA"]),
   check("numeroComprobante", 'El numeroComprobante es obligatorio').trim().not().isEmpty(),
   check("impuesto", 'El impuesto es obligatorio').trim().not().isEmpty(),
   check("detalles").custom(helperIngreso.cantidadIngreso),
+  check("detalles").custom(helperIngreso.detallesVacio),
   check("numeroComprobante").custom(helperIngreso.existeIngresoByNumero),
   check("detalles").custom(helperIngreso.validacionesDetalles),
 

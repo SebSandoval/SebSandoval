@@ -12,7 +12,11 @@ async function disminuirStock(_id, cantidadProducto) {
 }
 const ventaControllers = {
   ventaPost: async (req, res) => {
-    const { usuario, cliente, tipoComprobante, serieComprobante, numeroComprobante, fecha, impuesto, total, detalles } = req.body
+    
+    const { usuario, cliente, tipoComprobante, serieComprobante, numeroComprobante,total, impuesto,  detalles } = req.body
+    const fecha = new Date(Date.now() + (-1*new Date().getTimezoneOffset()*60000)).toISOString()
+
+    
     const venta = new Venta({ usuario, cliente, tipoComprobante, serieComprobante, numeroComprobante, fecha, impuesto, total, detalles })
 
     

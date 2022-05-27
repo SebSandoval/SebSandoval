@@ -7,7 +7,7 @@ const ingresoControllers = {
 
 
   ingresoPost: async (req, res) => {
-    const { usuario, proveedor, tipoComprobante, serieComprobante, numeroComprobante,  impuesto,  detalles  } = req.body
+    const { usuario, proveedor, tipoComprobante, serieComprobante, numeroComprobante,    impuesto,  detalles  } = req.body
     const fecha = new Date(Date.now() + (-1*new Date().getTimezoneOffset()*60000)).toISOString()
     
     
