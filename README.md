@@ -1,6 +1,6 @@
 # 👋 Hola, soy Juan Sebastián Sandoval  
 
-💻 **Full Stack Developer** con más de 2 años de experiencia en desarrollo de aplicaciones web, optimizando procesos y mejorando la eficiencia de sistemas.  
+💻 **Full Stack Developer** con más de 3 años de experiencia en desarrollo de aplicaciones web, optimizando procesos y mejorando la eficiencia de sistemas.  
 🚀 Trabajo con **TypeScript, PHP, Node.js, React, Next.js, NestJS, MySQL, MongoDB, PostgreSQL, Docker, AWS** y más.  
 ✨ Apasionado por la resolución de problemas, la calidad del código y la experiencia del usuario.  
 
